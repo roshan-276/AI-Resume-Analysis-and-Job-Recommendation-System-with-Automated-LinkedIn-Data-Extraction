@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Evaluation Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+
+    <h1>Resume Evaluation Report</h1>
+
+    <h2>Candidate Details</h2>
+    <p><strong>Name:</strong> {{ name }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+
+    <div class="score-box">
+        <h2>Resume Score: {{ score }}%</h2>
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ score }}%">{{ score }}%</div>
+        </div>
+    </div>
+
+    <h2>Professional Summary</h2>
+    {% for section, points in summary.items() %}
+        <h3>{{ section }}</h3>
+        <ul>
+            {% for point in points %}
+                <li>{{ point }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+    <h2>Recommended Job Roles</h2>
+    <ul>
+        {% for job in jobs %}
+            <li>{{ job }}</li>
+        {% endfor %}
+    </ul>
+
+    <form action="/download" method="POST">
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="score" value="{{ score }}">
+        <button type="submit">Download Summary (PDF)</button>
+    </form>
+
+</div>
+</body>
+</html>
